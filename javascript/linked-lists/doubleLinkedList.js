@@ -1,28 +1,19 @@
-/*
-    first node called head, last node is tail. They are null permeating.
-    Start at head then traverse the list until you get to the index you
-    are looking for. 
-    Scattered all over memory makes looping over slower. 
+// double has more space complexity that single linked list
 
-    prepend O(1)
-    append  O(1)
-    lookup  O(n)
-    insert  O(n) ---| worst case
-    delete  O(n) ---| 
-*/
-
-class SingleNode {
+class DoubleNode {
   constructor(value) {
     this.value = value;
     this.next = null;
+    this.prev = null;
   }
 }
 
-class LinkedList {
+class DoubleLinkedList {
   constructor(value) {
     this.head = {
       value: value,
       next: null,
+      prev: null,
     };
     this.tail = this.head;
     this.length = 1;
@@ -41,7 +32,8 @@ class LinkedList {
   }
 
   append(val) {
-    const newNode = new SingleNode(val);
+    const newNode = new DoubleNode(val);
+    newNode.prev = this.tail;
     this.tail.next = newNode;
     this.tail = newNode;
 
@@ -50,8 +42,9 @@ class LinkedList {
   }
 
   prepend(val) {
-    const newNode = new SingleNode(val);
+    const newNode = new DoubleNode(val);
     newNode.next = this.head;
+    this.head.prev = newNode;
 
     this.head = newNode;
     this.length++;
@@ -78,12 +71,14 @@ class LinkedList {
       this.prepend(value);
       return this.printList();
     }
-    const newNode = new SingleNode(value);
+    const newNode = new DoubleNode(value);
     const leader = this.traverseToIndex(index - 1);
     const nextNode = leader.next;
 
     leader.next = newNode;
+    newNode.prev = leader;
     newNode.next = nextNode;
+    nextNode.prev = newNode;
     this.length++;
     return this;
   }
@@ -118,7 +113,7 @@ class LinkedList {
   }
 }
 
-const myLinkedList = new LinkedList(10);
+const myLinkedList = new DoubleLinkedList(10);
 myLinkedList.append(5);
 myLinkedList.append(16);
 myLinkedList.prepend(1);
