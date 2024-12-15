@@ -32,6 +32,6 @@ class MyQueue {
   }
 
   empty() {
-    return this.stack.length === 0 && this.reversedStack === 0;
+    return this.stack.length === 0 && this.reversedStack.length === 0;
   }
 }
