@@ -17,6 +17,22 @@
 //return nums[nums.length - k];
 //}
 
+// Hoare's Quick Select algorithm:
+// Finds the kth smallest element in an unordered list
+
+function quickSelect(array, left, right, indexToFind) {
+  if (left < right) {
+    const partition = getPartition(array, left, right);
+    if (partition === indexToFind) {
+      return array[partition];
+    } else if (indexToFind < partition) {
+      return quickSelect(array, left, partition - 1, indexToFind);
+    } else {
+      return quickSelect(array, right, partition + 1, indexToFind);
+    }
+  }
+}
+
 function swap(array, i, j) {
   const temp = array[i];
   array[i] = array[j];
@@ -49,7 +65,7 @@ function quickSort(array, left, right) {
 
 function findKthLargest(nums, k) {
   const indexToFind = nums.length - k;
-  quickSort(nums, 0, nums.length - 1);
+  quickSelect(nums, 0, nums.length - 1, indexToFind);
 
   return nums[indexToFind];
 }
